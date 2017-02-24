@@ -6,19 +6,25 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
-    <sprite>sprites\Player</sprite>
-    <sprite>sprites\Bullet</sprite>
+    <sprite>sprites\spr_Player1</sprite>
+    <sprite>sprites\spr_Missile</sprite>
+    <sprite>sprites\spr_Player2</sprite>
+    <sprite>sprites\spr_Sun</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background1</background>
   </backgrounds>
   <paths name="paths"/>
   <objects name="objects">
-    <object>objects\object0</object>
-    <object>objects\object1</object>
+    <object>objects\obj_Player1</object>
+    <object>objects\obj_Missile1</object>
+    <object>objects\obj_Player2</object>
+    <object>objects\obj_Missile2</object>
+    <object>objects\obj_Sun</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\roomGame</room>
+    <room>rooms\rm_finish</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

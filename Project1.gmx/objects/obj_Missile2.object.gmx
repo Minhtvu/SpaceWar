@@ -25,8 +25,15 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>velocityX = 30 * cos(degtorad(obj_Player2.image_angle));
-velocityY = -30 * sin(degtorad(obj_Player2.image_angle));
+            <string>velocityX = 3 * cos(degtorad(obj_Player2.image_angle));
+velocityY = -3 * sin(degtorad(obj_Player2.image_angle));
+velocitX = 0;
+velocitY = 0;
+acceleratioX = 0;
+acceleratioY = 0;
+r_x = 0;
+r_y = 0
+GRAV = 100;
 </string>
           </argument>
         </arguments>
@@ -51,6 +58,15 @@ velocityY = -30 * sin(degtorad(obj_Player2.image_angle));
             <kind>1</kind>
             <string>x  += velocityX;
 y  += velocityY;
+rmag = sqrt(r_x*r_x + r_y*r_y);
+acceleratioX = GRAV * r_x / (rmag*rmag*rmag);
+acceleratioY = GRAV * r_y / (rmag*rmag*rmag);
+olX = velocitX;
+olY = velocitY;
+velocitX += acceleratioX;
+velocitY += acceleratioY;
+x  += velocityX + velocitX;
+y  += velocityY + velocitY;
 
 </string>
           </argument>

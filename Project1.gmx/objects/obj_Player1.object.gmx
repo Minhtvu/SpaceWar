@@ -30,10 +30,17 @@ velocityX = 0;
 velocityY = 0;
 accelerationX = 0;
 accelerationY = 0;
+velocitX = 0;
+velocitY = 0;
+acceleratioX = 0;
+acceleratioY = 0;
 heading = 0;
 cooldown = false;
 current_angle = image_angle;
 MAX_SPEED = 3;
+r_x = 0;
+r_y = 0;
+GRAV = 100;
 </string>
           </argument>
         </arguments>
@@ -84,10 +91,26 @@ dKey = keyboard_check(vk_down);
 lKey = keyboard_check(vk_left);
 rKey = keyboard_check(vk_right);
 uKey = keyboard_check(vk_up);
+//Gravity
+
+r_x = obj_Sun.x - x;
+r_y = obj_Sun.y - y;
+rmag = sqrt(r_x*r_x + r_y*r_y);
+acceleratioX = GRAV * r_x / (rmag*rmag*rmag);
+acceleratioY = GRAV * r_y / (rmag*rmag*rmag);
+olX = velocitX;
+olY = velocitY;
+velocitX += acceleratioX;
+velocitY += acceleratioY;
+ if ((sqrt(velocitX*velocitX + velocitY*velocitY) &gt; 2*MAX_SPEED))
+    {
+        velocitX = olX;
+        velocitY = olY;}
+//Thrust
 if (dKey)
 {
-   accelerationX = 0.1*cos(degtorad(image_angle));
-   accelerationY = -0.1*sin(degtorad(image_angle));
+   accelerationX = 0.01*cos(degtorad(image_angle));
+   accelerationY = -0.01*sin(degtorad(image_angle));
    oldX = velocityX;
    oldY = velocityY;
    velocityX += accelerationX;
@@ -97,8 +120,8 @@ if (dKey)
         velocityX = oldX;
         velocityY = oldY;}
 }
-accelerationX = 0;
-accelerationY = 0;
+x  += velocityX + velocitX;
+y  += velocityY + velocitY;
 if (lKey)
 {
    image_angle += 3;
@@ -110,8 +133,7 @@ if (rKey)
 }
 //Calculate velocity
 //Move the ship
-x  += velocityX;
-y  += velocityY;
+
 //Keep not out of screen
 if ( y &lt;= 0){
     y = room_height -1}
@@ -127,9 +149,66 @@ if (uKey &amp;&amp; cooldown = false)
     instance_create(x,y, obj_Missile1);
     cooldown = true;
     alarm[0] = 5;}
+
 </string>
           </argument>
         </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_Sun">
+      <action>
+        <libid>1</libid>
+        <id>532</id>
+        <kind>0</kind>
+        <userelative>-1</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_effect</functionname>
+        <codestring></codestring>
+        <whoName>other</whoName>
+        <relative>-1</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>4</kind>
+            <string>0</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>0</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>0</string>
+          </argument>
+          <argument>
+            <kind>4</kind>
+            <string>1</string>
+          </argument>
+          <argument>
+            <kind>13</kind>
+            <string>16777215</string>
+          </argument>
+          <argument>
+            <kind>4</kind>
+            <string>0</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>203</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_kill_object</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
       </action>
     </event>
     <event eventtype="4" ename="obj_Missile2">
@@ -207,62 +286,6 @@ if (uKey &amp;&amp; cooldown = false)
 </string>
           </argument>
         </arguments>
-      </action>
-    </event>
-    <event eventtype="4" ename="obj_Player2">
-      <action>
-        <libid>1</libid>
-        <id>532</id>
-        <kind>0</kind>
-        <userelative>-1</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_effect</functionname>
-        <codestring></codestring>
-        <whoName>other</whoName>
-        <relative>-1</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>4</kind>
-            <string>0</string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>0</string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>0</string>
-          </argument>
-          <argument>
-            <kind>4</kind>
-            <string>1</string>
-          </argument>
-          <argument>
-            <kind>13</kind>
-            <string>16777215</string>
-          </argument>
-          <argument>
-            <kind>4</kind>
-            <string>0</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>203</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_kill_object</functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
       </action>
     </event>
   </events>

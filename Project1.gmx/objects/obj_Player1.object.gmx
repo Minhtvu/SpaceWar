@@ -37,10 +37,89 @@ acceleratioY = 0;
 heading = 0;
 cooldown = false;
 current_angle = image_angle;
-MAX_SPEED = 3;
+MAX_SPEED = 2;
 r_x = 0;
 r_y = 0;
 GRAV = 100;
+MAX_FUEL = 20;
+MAX_MISSILE = 5;
+fuel = 5;
+missile = 2;
+alarm[1] = 40;
+alarm[2] = 20;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="3">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>room_restart();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (fuel &lt; MAX_FUEL)
+    fuel += 1;
+alarm[2] = 20;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (missile &lt; MAX_MISSILE)
+   missile +=1;
+alarm[1]=40;
 </string>
           </argument>
         </arguments>
@@ -86,7 +165,8 @@ GRAV = 100;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//Input
+            <string>image_index = 0;
+//Input
 dKey = keyboard_check(vk_down);
 lKey = keyboard_check(vk_left);
 rKey = keyboard_check(vk_right);
@@ -107,10 +187,10 @@ velocitY += acceleratioY;
         velocitX = olX;
         velocitY = olY;}
 //Thrust
-if (dKey)
+if (dKey &amp;&amp; fuel &gt; 0)
 {
-   accelerationX = 0.01*cos(degtorad(image_angle));
-   accelerationY = -0.01*sin(degtorad(image_angle));
+   accelerationX = 0.1*cos(degtorad(image_angle));
+   accelerationY = -0.1*sin(degtorad(image_angle));
    oldX = velocityX;
    oldY = velocityY;
    velocityX += accelerationX;
@@ -119,6 +199,8 @@ if (dKey)
     {
         velocityX = oldX;
         velocityY = oldY;}
+   fuel -= 1;
+   image_index = 1;
 }
 x  += velocityX + velocitX;
 y  += velocityY + velocitY;
@@ -144,71 +226,16 @@ if ( x &lt;= 0){
 else if (x &gt;= room_width){
     x = 1;}
 //Shooting
-if (uKey &amp;&amp; cooldown = false)
+if (uKey &amp;&amp; cooldown = false &amp;&amp; missile &gt; 0)
 {
     instance_create(x,y, obj_Missile1);
     cooldown = true;
-    alarm[0] = 5;}
+    alarm[0] = 10;
+    missile -= 1;}
 
 </string>
           </argument>
         </arguments>
-      </action>
-    </event>
-    <event eventtype="4" ename="obj_Sun">
-      <action>
-        <libid>1</libid>
-        <id>532</id>
-        <kind>0</kind>
-        <userelative>-1</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_effect</functionname>
-        <codestring></codestring>
-        <whoName>other</whoName>
-        <relative>-1</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>4</kind>
-            <string>0</string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>0</string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>0</string>
-          </argument>
-          <argument>
-            <kind>4</kind>
-            <string>1</string>
-          </argument>
-          <argument>
-            <kind>13</kind>
-            <string>16777215</string>
-          </argument>
-          <argument>
-            <kind>4</kind>
-            <string>0</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>203</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_kill_object</functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
       </action>
     </event>
     <event eventtype="4" ename="obj_Missile2">
@@ -254,6 +281,27 @@ if (uKey &amp;&amp; cooldown = false)
       </action>
       <action>
         <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>obj_Sun.alarm[3] = 40;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
         <id>203</id>
         <kind>0</kind>
         <userelative>0</userelative>
@@ -265,6 +313,48 @@ if (uKey &amp;&amp; cooldown = false)
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_Sun">
+      <action>
+        <libid>1</libid>
+        <id>532</id>
+        <kind>0</kind>
+        <userelative>-1</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_effect</functionname>
+        <codestring></codestring>
+        <whoName>other</whoName>
+        <relative>-1</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>4</kind>
+            <string>0</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>0</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>0</string>
+          </argument>
+          <argument>
+            <kind>4</kind>
+            <string>1</string>
+          </argument>
+          <argument>
+            <kind>13</kind>
+            <string>16777215</string>
+          </argument>
+          <argument>
+            <kind>4</kind>
+            <string>0</string>
+          </argument>
+        </arguments>
       </action>
       <action>
         <libid>1</libid>
@@ -282,10 +372,24 @@ if (uKey &amp;&amp; cooldown = false)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//room_goto(rm_finish);
+            <string>obj_Sun.alarm[3] = 40;
 </string>
           </argument>
         </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>203</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_kill_object</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
       </action>
     </event>
   </events>

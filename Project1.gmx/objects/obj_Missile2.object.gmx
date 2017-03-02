@@ -25,8 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>velocityX = 3 * cos(degtorad(obj_Player2.image_angle));
-velocityY = -3 * sin(degtorad(obj_Player2.image_angle));
+            <string>velocityX = -3 * cos(degtorad(obj_Player2.image_angle));
+velocityY = 3 * sin(degtorad(obj_Player2.image_angle));
 velocitX = 0;
 velocitY = 0;
 acceleratioX = 0;

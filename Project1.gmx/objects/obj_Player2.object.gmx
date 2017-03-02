@@ -43,16 +43,15 @@ r_x = 0;
 r_y = 0;
 MAX_FUEL = 20;
 MAX_MISSILE = 5;
-fuel = 5;
-missile = 2;
 alarm[1] = 40;
 alarm[2] = 20;
+tele_cooldown = false;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="2" enumb="3">
+    <event eventtype="2" enumb="4">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -69,7 +68,7 @@ alarm[2] = 20;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>room_restart();
+            <string>tele_cooldown = false;
 </string>
           </argument>
         </arguments>
@@ -92,8 +91,8 @@ alarm[2] = 20;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (fuel &lt; MAX_FUEL)
-    fuel += 1;
+            <string>if (global.fuel_2 &lt; MAX_FUEL)
+    global.fuel_2 += 1;
 alarm[2] = 20;
 </string>
           </argument>
@@ -117,8 +116,8 @@ alarm[2] = 20;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (missile &lt; MAX_MISSILE)
-    missile += 1;
+            <string>if (global.missile_2 &lt; MAX_MISSILE)
+    global.missile_2 += 1;
 alarm[1] = 40;
 </string>
           </argument>
@@ -171,6 +170,7 @@ dKey = keyboard_check(ord('S'));
 lKey = keyboard_check(ord('A'));
 rKey = keyboard_check(ord('D'));
 uKey = keyboard_check(ord('W'));
+tKey = keyboard_check(ord('Q'));
 //Gravity
 r_x = obj_Sun.x - x;
 r_y = obj_Sun.y - y;
@@ -186,10 +186,10 @@ if ((sqrt(velocitX*velocitX + velocitY*velocitY) &gt; 2*MAX_SPEED))
         velocitX = olX;
         velocitY = olY;}
 //Thurst
-if (dKey &amp;&amp; fuel &gt; 0)
+if (dKey &amp;&amp;  global.fuel_2 &gt; 0)
 {
-   accelerationX = 0.1*cos(degtorad(image_angle));
-   accelerationY = -0.1*sin(degtorad(image_angle));
+   accelerationX = -0.1*cos(degtorad(image_angle));
+   accelerationY = 0.1*sin(degtorad(image_angle));
    oldX = velocityX;
    oldY = velocityY;
    velocityX += accelerationX;
@@ -198,7 +198,7 @@ if (dKey &amp;&amp; fuel &gt; 0)
     {
         velocityX = oldX;
         velocityY = oldY;}      
-    fuel -= 1;
+    global.fuel_2 -= 1;
     image_index = 1;
 }
 x  += velocityX + velocitX;
@@ -225,12 +225,19 @@ if ( x &lt;= 0){
 else if (x &gt;= room_width){
     x = 1;}
 //Shooting
-if (uKey &amp;&amp; cooldown = false &amp;&amp; missile &gt; 0)
+if (uKey &amp;&amp; cooldown = false &amp;&amp;  global.missile_2 &gt; 0)
 {
-    instance_create(x,y, obj_Missile2);
+    instance_create(x, y, obj_Missile2);
     cooldown = true;
     alarm[0] = 10;
-    missile -= 1;}
+    global.missile_2 -= 1;}
+if (tKey &amp;&amp; tele_cooldown = false)
+{
+   x = random(room_width);
+   y = random(room_height);
+   tele_cooldown = true;
+   alarm[4] = 60;
+}
 </string>
           </argument>
         </arguments>
@@ -294,6 +301,7 @@ if (uKey &amp;&amp; cooldown = false &amp;&amp; missile &gt; 0)
           <argument>
             <kind>1</kind>
             <string>obj_Sun.alarm[3]=40;
+global.score_1 += 1;
 </string>
           </argument>
         </arguments>
@@ -371,6 +379,8 @@ if (uKey &amp;&amp; cooldown = false &amp;&amp; missile &gt; 0)
           <argument>
             <kind>1</kind>
             <string>obj_Sun.alarm[3]=40;
+global.score_1 += 1;
+
 </string>
           </argument>
         </arguments>

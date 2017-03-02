@@ -25,7 +25,13 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>global.GRAV = 5;
+            <string>global.score_1 = 0;
+global.score_2 = 0;
+global.missile_1 = 2;
+global.missile_2 = 2;
+global.fuel_1 = 5;
+global.fuel_2 = 5;
+
 </string>
           </argument>
         </arguments>
@@ -48,7 +54,54 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>room_restart();
+            <string>with(obj_Player1){
+    instance_destroy();}
+with(obj_Player2){
+    instance_destroy();}
+with(obj_Missile1){
+    instance_destroy();}
+with(obj_Missile2){
+    instance_destroy();}
+instance_create(32,20, obj_Player1);
+instance_create(608,460, obj_Player2);
+global.missile_1 = 2;
+global.missile_2 = 2;
+global.fuel_1 = 5;
+global.fuel_2 = 5;
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_text_colour(192,10, "Player 1: " + string(global.score_1), c_red,c_red,c_red,c_red,1);
+draw_text_colour(352,10, "Player 2: " + string(global.score_2), c_yellow,c_yellow,c_yellow,c_yellow,1);
+draw_sprite(spr_Sun, -1, 320,240);
+draw_text_colour(64,460, "Ammo 1: " + string(global.missile_1),c_red,c_red,c_red,c_red,1);
+draw_text_colour(300,460, "Ammo 2: " + string(global.missile_2),c_yellow,c_yellow,c_yellow,c_yellow,1);
+draw_text_colour(64,440, "Fuel 1: ",c_red,c_red,c_red,c_red,1);
+for (var i =0; i &lt; global.fuel_1; i++){
+   draw_sprite(spr_fuel, 0, 130 + i*5,448);}
+draw_text_colour(300,440, "Fuel 2: ",c_yellow,c_yellow,c_yellow,c_yellow,1);
+for (var i =0; i &lt; global.fuel_2; i++){
+   draw_sprite(spr_fuel, 1, 366 + i*5,448);}
 </string>
           </argument>
         </arguments>

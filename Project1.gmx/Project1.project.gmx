@@ -10,7 +10,7 @@
     <sprite>sprites\spr_Missile</sprite>
     <sprite>sprites\spr_Player2</sprite>
     <sprite>sprites\spr_Sun</sprite>
-    <sprite>sprites\spr_player1_win</sprite>
+    <sprite>sprites\spr_fuel</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background1</background>
@@ -22,11 +22,9 @@
     <object>objects\obj_Missile2</object>
     <object>objects\obj_Player2</object>
     <object>objects\obj_Sun</object>
-    <object>objects\player1_win</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\roomGame</room>
-    <room>rooms\rm_finish</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>
